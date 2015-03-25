@@ -22,7 +22,7 @@ class agent {
 		ensure       => absent,
 	} ->
 
-	host { "${::cond_agentfqdn}":
+	host { "${cond_agentfqdn}":
 		ensure       => present,
 		ip           => '127.0.1.1',
 		host_aliases => [ $::hostname, 'localhost' ],
