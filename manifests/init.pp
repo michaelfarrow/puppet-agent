@@ -42,16 +42,20 @@ class agent {
 		order   => '21',
 	}
 
-	Ini_setting {
-		ensure     => present,
-		path       => "/etc/puppet/puppet.conf",
-	}
+	if defined('ini_setting') {
 
-	ini_setting { 'ensure no templatedir':
-		ensure     => absent,
-		section    => 'main',
-		setting    => 'templatedir',
-		before     => Class['puppet'],
+		Ini_setting {
+			ensure     => present,
+			path       => "/etc/puppet/puppet.conf",
+		}
+
+		ini_setting { 'ensure no templatedir':
+			ensure     => absent,
+			section    => 'main',
+			setting    => 'templatedir',
+			before     => Class['puppet'],
+		}
+
 	}
 
 }
