@@ -1,6 +1,6 @@
 # Puppet Agent Module
 
-```bash
+```ruby
 mod "puppetlabs/stdlib", "4.5.1"
 mod "puppetlabs/concat", "1.2.0"
 mod "puppetlabs/inifile", "1.2.0"
