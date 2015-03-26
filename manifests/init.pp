@@ -18,14 +18,19 @@ class agent {
 		$cond_environment = $environment
 	}
 
-	host { "${hostname}":
-		ensure       => absent,
-	} ->
+	$cond_fqdn_parts = split($cond_fqdn, '[.]')
+	$cond_hostname = $cond_fqdn_parts[0]
+
+	if $hostname != $cond_hostname {
+		host { "${hostname}":
+			ensure       => absent,
+		}
+	}
 
 	host { "${cond_agentfqdn}":
 		ensure       => present,
 		ip           => '127.0.1.1',
-		host_aliases => [ $::hostname, 'localhost' ],
+		host_aliases => [ $cond_hostname, 'localhost' ],
 	} ->
 
 	class { 'puppet':
