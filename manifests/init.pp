@@ -1,5 +1,7 @@
 class agent {
 
+	Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/', '/usr/local/bin/' ] }
+
 	if $::agentfqdn != '' {
 		$cond_agentfqdn = $::agentfqdn
 	} else {
