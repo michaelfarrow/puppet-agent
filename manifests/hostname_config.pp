@@ -1,5 +1,14 @@
 class agent::hostname_config {
 
+	if $::agentfqdn != '' {
+		$cond_agentfqdn = $::agentfqdn
+	} else {
+		$cond_agentfqdn = $::fqdn
+	}
+
+	$cond_fqdn_parts = split($cond_agentfqdn, '[.]')
+	$cond_hostname = $cond_fqdn_parts[0]
+
 	host { "${hostname}":
 		ensure => absent,
 		before => Host["${cond_agentfqdn}"],

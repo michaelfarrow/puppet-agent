@@ -21,9 +21,6 @@ class agent {
 		$cond_environment = $environment
 	}
 
-	$cond_fqdn_parts = split($cond_agentfqdn, '[.]')
-	$cond_hostname = $cond_fqdn_parts[0]
-
 	stage { 'first':
 		before => Stage['main'],
 	}
