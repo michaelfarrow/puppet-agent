@@ -18,7 +18,7 @@ class agent {
 	if $::masterfqdn != '' {
 		$cond_masterfqdn = $::masterfqdn
 	} else {
-		$cond_masterfqdn = $::settings::server
+		$cond_masterfqdn = $::servername
 	}
 
 	if $agentenvironment != '' {
