@@ -45,6 +45,10 @@ class agent {
 		unless       => "hostname | grep -xqe '^${cond_hostname}\$'",
 	} ->
 
+	exec { "echo ${cond_hostname} > /etc/hostname":
+		unless       => "cat /etc/hostname | grep -xqe '^${cond_hostname}\$'",
+	} ->
+
 	class { 'puppet':
 		environment => $cond_environment,
 		report      => true,
