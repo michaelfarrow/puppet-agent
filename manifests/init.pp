@@ -29,7 +29,7 @@ class agent {
 	}
 
 	class { 'agent::hostname_config':
-		stage = 'first',
+		stage => 'first',
 	}
 
 	if $::masterfqdn != '' {
