@@ -48,24 +48,10 @@ class agent {
 		order   => '21',
 	}
 
-	Ini_setting {
-		ensure     => present,
-		path       => "/etc/puppet/puppet.conf",
-	}
-
-	ini_setting { 'ensure no templatedir':
-		ensure     => absent,
-		section    => 'main',
-		setting    => 'templatedir',
-		before     => Class['puppet'],
-	}
-
-	ini_setting { "set agent certname":
-		ensure    => present,
-		section   => "agent",
-		setting   => "certname",
-		value     => $cond_agentfqdn,
-		require   => Package["puppet"],
+	concat::fragment{'puppet_conf_agent_splay':
+		target  => 'puppet_conf',
+		content => "  certname = ${cond_agentfqdn}\n",
+		order   => '22',
 	}
 	
 }
