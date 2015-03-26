@@ -15,12 +15,6 @@ class agent {
 		$cond_agentfqdn = $::fqdn
 	}
 
-	if $::masterfqdn != '' {
-		$cond_masterfqdn = $::masterfqdn
-	} else {
-		$cond_masterfqdn = $::servername
-	}
-
 	if $agentenvironment != '' {
 		$cond_environment = $agentenvironment
 	} else {
@@ -38,12 +32,21 @@ class agent {
 		stage = 'first',
 	}
 
-	class { 'puppet':
-		environment => $cond_environment,
-		report      => true,
-		pluginsync  => true,
-		agent       => 'running',
-		server      => $cond_masterfqdn
+	if $::masterfqdn != '' {
+
+		class { 'puppet':
+			environment => $cond_environment,
+			report      => true,
+			pluginsync  => true,
+			agent       => 'running',
+			server      => $::masterfqdn
+		} ->
+
+		exec { "storing master config":
+			command => "echo '${::masterfqdn}' > /etc/puppet/master_conf",
+			unless  => "test -e /etc/puppet/master_conf",
+		}
+
 	}
 
 	concat::fragment{'puppet_conf_agent_splay':
