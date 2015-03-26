@@ -2,6 +2,13 @@ class agent {
 
 	Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/', '/usr/local/bin/' ] }
 
+	exec { "apt-update":
+		command => "/usr/bin/apt-get update && touch /tmp/apt-get-updated",
+		unless  => "test -e /tmp/apt-get-updated",
+	}
+
+	Exec["apt-update"] -> Package <| |>
+
 	if $::agentfqdn != '' {
 		$cond_agentfqdn = $::agentfqdn
 	} else {
