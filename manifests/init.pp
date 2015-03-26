@@ -44,18 +44,18 @@ class agent {
 			unless  => "test -e /etc/puppet/master_conf",
 		}
 
+		concat::fragment{'puppet_conf_agent_splay':
+			target  => 'puppet_conf',
+			content => "  splay = true\n",
+			order   => '21',
+		}
+
+		concat::fragment{'puppet_conf_agent_certname':
+			target  => 'puppet_conf',
+			content => "  certname = ${cond_agentfqdn}\n",
+			order   => '22',
+		}
+
 	}
 
-	concat::fragment{'puppet_conf_agent_splay':
-		target  => 'puppet_conf',
-		content => "  splay = true\n",
-		order   => '21',
-	}
-
-	concat::fragment{'puppet_conf_agent_certname':
-		target  => 'puppet_conf',
-		content => "  certname = ${cond_agentfqdn}\n",
-		order   => '22',
-	}
-	
 }
