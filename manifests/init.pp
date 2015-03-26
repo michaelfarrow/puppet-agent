@@ -1,15 +1,15 @@
 class agent {
 
-	if $agentfqdn != '' {
-		$cond_agentfqdn = $agentfqdn
+	if $::agentfqdn != '' {
+		$cond_agentfqdn = $::agentfqdn
 	} else {
-		$cond_agentfqdn = $fqdn
+		$cond_agentfqdn = $::fqdn
 	}
 
-	if $masterfqdn != '' {
-		$cond_masterfqdn = $masterfqdn
+	if $::masterfqdn != '' {
+		$cond_masterfqdn = $::masterfqdn
 	} else {
-		$cond_masterfqdn = $fqdn
+		$cond_masterfqdn = $::fqdn
 	}
 
 	if $agentenvironment != '' {
@@ -23,7 +23,8 @@ class agent {
 
 	if $hostname != $cond_hostname {
 		host { "${hostname}":
-			ensure       => absent,
+			ensure => absent,
+			before => Host["${cond_agentfqdn}"],
 		}
 	}
 
