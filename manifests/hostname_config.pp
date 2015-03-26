@@ -1,4 +1,4 @@
-class hostname_config {
+class agent::hostname_config {
 
 	host { "${hostname}":
 		ensure => absent,
