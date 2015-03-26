@@ -48,7 +48,7 @@ class agent {
 		order   => '21',
 	}
 
-	concat::fragment{'puppet_conf_agent_splay':
+	concat::fragment{'puppet_conf_agent_certname':
 		target  => 'puppet_conf',
 		content => "  certname = ${cond_agentfqdn}\n",
 		order   => '22',
