@@ -2,9 +2,13 @@ class agent::hostname_config {
 
 	if $::agentfqdn != '' {
 		$cond_agentfqdn = $::agentfqdn
+		notify {"does not equal blank":}
 	} else {
 		$cond_agentfqdn = $::fqdn
+		notify {"is blank":}
 	}
+
+	notify {"cond_agentfqdn: ${cond_agentfqdn}":}
 
 	$cond_fqdn_parts = split($cond_agentfqdn, '[.]')
 	$cond_hostname = $cond_fqdn_parts[0]
