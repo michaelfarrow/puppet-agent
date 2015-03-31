@@ -6,12 +6,12 @@
   ssldir        = /var/lib/puppet/ssl
   rundir        = /var/run/puppet
   factpath      = $vardir/lib/facter:$vardir/facts
-  server        = puppet01.aesopagency.com
+  server        = <%= $masterfqdn %>
 
 # These are set by the puppet base class when the puppet agent is running
 [agent]
-  environment   = dev_mac
+  environment   = <%= $cond_environment %>
   report        = true
   pluginsync    = true
-  splay = true
-  certname = set.aesopagency.com
+  splay         = true
+  certname      = <%= $cond_agentfqdn %>
