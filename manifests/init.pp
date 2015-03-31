@@ -15,10 +15,10 @@ class agent {
 
 		Exec["apt-update"] -> Package <| |>
 
-		class { 'agent::hostname_config':
-			stage => 'first',
-		}
+	}
 
+	class { 'agent::hostname_config':
+		stage => 'first',
 	}
 
 	if $::agentfqdn != '' {
@@ -51,6 +51,11 @@ class agent {
 
 		}
 
+		exec { "storing master config":
+			command => "echo '${::masterfqdn}' > /etc/puppet/master_conf",
+			unless  => "test -e /etc/puppet/master_conf",
+		}
+
 		if $::osfamily == 'Debian' {
 
 			class { 'puppet':
@@ -60,11 +65,6 @@ class agent {
 				agent       => 'running',
 				server      => $::masterfqdn,
 				before      => Exec['storing master config']
-			}
-
-			exec { "storing master config":
-				command => "echo '${::masterfqdn}' > /etc/puppet/master_conf",
-				unless  => "test -e /etc/puppet/master_conf",
 			}
 
 			concat::fragment{'puppet_conf_agent_splay':
