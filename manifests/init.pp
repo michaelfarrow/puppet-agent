@@ -74,7 +74,7 @@ class agent {
 				group   => 'wheel',
 				mode    => 0644,
 				source  => 'puppet:///modules/agent/com.puppetlabs.puppet.plist',
-				notiy   => Service['com.puppetlabs.puppet'],
+				notify   => Service['com.puppetlabs.puppet'],
 			} -> 
 
 			service { 'com.puppetlabs.puppet':
