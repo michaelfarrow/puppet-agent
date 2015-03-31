@@ -73,7 +73,7 @@ class agent {
 				owner   => 'root',
 				group   => 'wheel',
 				mode    => 0644,
-				content => 'puppet:///modules/agent/com.puppetlabs.puppet.plist',
+				source => 'puppet:///modules/agent/com.puppetlabs.puppet.plist',
 			} -> 
 
 			service { 'com.puppetlabs.puppet':
