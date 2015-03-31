@@ -16,7 +16,7 @@ class agent::hostname_config {
 
 	host { "localhost":
 		ensure => present,
-		ip     => '127.0.0.1'
+		ip     => '127.0.0.1',
 		before => Host["${cond_agentfqdn}"],
 		host_aliases => [],
 	}
