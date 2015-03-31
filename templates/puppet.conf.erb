@@ -1,0 +1,17 @@
+# This file is managed by Puppet, changes may be overwritten
+# These settings are set with the puppet base class
+[main]
+  logdir        = /var/log/puppet
+  vardir        = /var/lib/puppet
+  ssldir        = /var/lib/puppet/ssl
+  rundir        = /var/run/puppet
+  factpath      = $vardir/lib/facter:$vardir/facts
+  server        = puppet01.aesopagency.com
+
+# These are set by the puppet base class when the puppet agent is running
+[agent]
+  environment   = dev_mac
+  report        = true
+  pluginsync    = true
+  splay = true
+  certname = set.aesopagency.com

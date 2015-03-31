@@ -35,28 +35,58 @@ class agent {
 
 	if $::masterfqdn != '' {
 
-		if $::osfamily == 'Darwin' {
-
-			package { 'mac_puppet':
-				ensure   => installed,
-				provider => pkgdmg,
-				source   => 'http://downloads.puppetlabs.com/mac/facter-2.4.1.dmg',
-			}
-
-			package { 'mac_facter':
-				ensure   => installed,
-				provider => pkgdmg,
-				source   => 'http://downloads.puppetlabs.com/mac/puppet-3.7.4.dmg',
-			}
-
-		}
-
 		exec { "storing master config":
 			command => "echo '${::masterfqdn}' > /etc/puppet/master_conf",
 			unless  => "test -e /etc/puppet/master_conf",
 		}
 
+		if $::osfamily == 'Darwin' {
+
+			Exec <| title == "storing master config" |> {
+				require => Package['mac_puppet'],
+			}
+
+			package { 'mac_puppet':
+				ensure   => installed,
+				provider => pkgdmg,
+				source   => 'http://downloads.puppetlabs.com/mac/facter-2.4.1.dmg',
+			} ->
+
+			package { 'mac_facter':
+				ensure   => installed,
+				provider => pkgdmg,
+				source   => 'http://downloads.puppetlabs.com/mac/puppet-3.7.4.dmg',
+			} ->
+
+			file { '/etc/puppet':
+				ensure  => directory,
+			} ->
+
+			file { '/etc/puppet/puppet.conf':
+				ensure   => present,
+				notify   => Service['com.puppetlabs.puppet'],
+				content => template("agent/puppet.conf.erb"),
+			} ->
+
+			file { '/Library/LaunchDaemons/com.puppetlabs.puppet.plist':
+				ensure  => present,
+				owner   => 'root',
+				group   => 'wheel',
+				mode    => 0644,
+				content => 'puppet:///modules/agent/com.puppetlabs.puppet.plist',
+			} -> 
+
+			service { 'com.puppetlabs.puppet':
+				ensure => running,
+			}
+
+		}
+
 		if $::osfamily == 'Debian' {
+
+			Exec <| title == "storing master config" |> {
+				require => Class['puppet'],
+			}
 
 			class { 'puppet':
 				environment => $cond_environment,
