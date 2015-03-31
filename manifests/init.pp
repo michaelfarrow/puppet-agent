@@ -2,7 +2,7 @@ class agent {
 
 	Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/', '/usr/local/bin/' ] }
 
-	stage { 'first':
+	stage { 'agent-first':
 		before => Stage['main'],
 	}
 
@@ -18,7 +18,7 @@ class agent {
 	}
 
 	class { 'agent::hostname_config':
-		stage => 'first',
+		stage => 'agent-first',
 	}
 
 	if $::agentfqdn != '' {
