@@ -14,10 +14,22 @@ class agent::hostname_config {
 		before => Host["${cond_agentfqdn}"],
 	}
 
-	host { "${cond_agentfqdn}":
-		ensure       => present,
-		ip           => '127.0.1.1',
-		host_aliases => [ $cond_hostname, 'localhost' ],
+	if $::osfamily == 'Debian' {
+
+		host { "${cond_agentfqdn}":
+			ensure       => present,
+			ip           => '127.0.1.1',
+			host_aliases => [ $cond_hostname, 'localhost' ],
+		}
+
+	}
+
+	if $::osfamily == 'Darwin' {
+		host { "${cond_agentfqdn}":
+			ensure       => present,
+			ip           => '127.0.0.1',
+			host_aliases => [ $cond_hostname, 'localhost' ],
+		}
 	}
 
 	exec { "hostname ${cond_hostname}":
