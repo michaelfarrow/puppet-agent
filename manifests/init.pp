@@ -34,7 +34,7 @@ class agent {
 	}
 
 	exec { "storing agent config":
-		command => "echo '${::agentfqdn}' > /etc/puppet/agent_conf",
+		command => "echo '${cond_agentfqdn}' > /etc/puppet/agent_conf",
 		unless  => "test -e /etc/puppet/agent_conf",
 	}
 
