@@ -33,6 +33,11 @@ class agent {
 		$cond_environment = $environment
 	}
 
+	exec { "storing agent config":
+		command => "echo '${::agentfqdn}' > /etc/puppet/agent_conf",
+		unless  => "test -e /etc/puppet/agent_conf",
+	}
+
 	if $::masterfqdn != '' {
 
 		exec { "storing master config":
