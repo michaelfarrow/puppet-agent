@@ -5,7 +5,7 @@
         <key>Label</key>
         <string>com.puppetlabs.puppet</string>
         <key>KeepAlive</key>
-        <true/>
+        <false/>
         <key>ProgramArguments</key>
         <array>
                 <string>/usr/bin/puppet</string>
