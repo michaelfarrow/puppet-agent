@@ -6,6 +6,8 @@
         <string>com.puppetlabs.puppet</string>
         <key>KeepAlive</key>
         <true/>
+        <key>Disabled</key>
+        <false/>
         <key>ProgramArguments</key>
         <array>
                 <string>/usr/bin/puppet</string>
