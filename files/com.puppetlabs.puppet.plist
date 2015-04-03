@@ -4,8 +4,8 @@
 <dict>
         <key>Label</key>
         <string>com.puppetlabs.puppet</string>
-        <key>Disabled</key>
-        <false/>
+        <key>KeepAlive</key>
+        <true/>
         <key>ProgramArguments</key>
         <array>
                 <string>/usr/bin/puppet</string>
