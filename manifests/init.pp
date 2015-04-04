@@ -84,6 +84,7 @@ class agent {
 
 			service { 'com.puppetlabs.puppet':
 				ensure => running,
+				enable => true,
 			}
 
 		}
