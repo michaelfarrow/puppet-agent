@@ -69,7 +69,7 @@ class agent {
 
 			file { '/etc/puppet/puppet.conf':
 				ensure   => present,
-				notify   => Service['com.puppetlabs.puppet'],
+				notify   => Service['com.prey.agent'],
 				content => template("agent/puppet.conf.erb"),
 			} ->
 
