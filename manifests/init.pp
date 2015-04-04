@@ -79,10 +79,15 @@ class agent {
 				group   => 'wheel',
 				mode    => 0644,
 				source  => 'puppet:///modules/agent/com.puppetlabs.puppet.plist',
-				notify   => Service['com.puppetlabs.puppet'],
+				notify   => Service['com.prey.agent'],
 			} -> 
 
 			service { 'com.puppetlabs.puppet':
+				ensure => running,
+				enable => true,
+			}->
+
+			service { 'com.prey.agent':
 				ensure => running,
 				enable => true,
 			}
