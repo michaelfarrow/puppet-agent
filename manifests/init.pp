@@ -69,7 +69,7 @@ class agent {
 
 			file { '/etc/puppet/puppet.conf':
 				ensure   => present,
-				notify   => Service['com.prey.agent'],
+				notify   => Service['com.puppetlabs.puppet'],
 				content => template("agent/puppet.conf.erb"),
 			} ->
 
@@ -79,17 +79,13 @@ class agent {
 				group   => 'wheel',
 				mode    => 0644,
 				source  => 'puppet:///modules/agent/com.puppetlabs.puppet.plist',
-				notify   => Service['com.prey.agent'],
+				notify   => Service['com.puppetlabs.puppet'],
 			} -> 
 
 			service { 'com.puppetlabs.puppet':
-				ensure => running,
-				enable => true,
-			}->
-
-			service { 'com.prey.agent':
-				ensure => running,
-				enable => true,
+				provider => 'ghlaunchd',
+				ensure   => running,
+				enable   => true,
 			}
 
 		}
