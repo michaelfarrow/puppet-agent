@@ -12,7 +12,7 @@ mod "Aethylred/puppet", "1.5.3"
 # dep (optional): puppetlabs/inifile
 # dep: Aethylred/puppet
 mod "weyforth/agent",
-	git: "https://weyforth@bitbucket.org/weyforth/puppet-agent.git",
+	git: "https://github.com/weyforth/puppet-agent.git",
 	ref: "master"
 ```
 
